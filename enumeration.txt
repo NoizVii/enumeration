@@ -1,0 +1,93 @@
+public enum MenuOption
+{
+    Withdraw = 0,
+    Deposit = 1,
+    Print = 2,
+    Transfer = 3,
+
+    NewAccount = 4,
+
+    PrintTransactions = 5,
+    Quit = 6,
+
+}
+public class Program
+{
+
+    private static MenuOption ReadUserOption()
+    {
+        int userSelection;
+        do
+        {
+            Console.WriteLine("Bank Program Menu");
+            Console.WriteLine("[1] to Withdraw");
+            Console.WriteLine("[2] to Deposit");
+            Console.WriteLine("[3] to Print");
+            Console.WriteLine("[4] to Transfer");
+            Console.WriteLine("[5] to Add new account");
+            Console.WriteLine("[6] to Print transaction history");
+            Console.WriteLine("[7] to Quit");
+            Console.Write("Selection: ");
+
+            try
+            {
+                userSelection = Convert.ToInt32(Console.ReadLine());
+            }
+            catch
+            {
+                Console.WriteLine("Invalid input, please enter a number, 1, 2, 3, 4, 5, 6 or 7");
+                userSelection = -1;
+            }
+
+        } while (userSelection < 1 || userSelection > 7);
+
+        return (MenuOption)(userSelection - 1);
+
+    }
+
+    public static void Main()
+    {
+        Bank bank = new Bank();
+
+        MenuOption userSelection; //menu selections
+
+        do
+        {
+            userSelection = ReadUserOption();
+
+            switch (userSelection)
+            {
+                case MenuOption.Withdraw:
+                    DoWithdraw(bank);
+                    break;
+
+                case MenuOption.Deposit:
+                    DoDeposit(bank);
+                    break;
+
+                case MenuOption.Print:
+                    DoPrint(bank);
+                    break;
+
+                case MenuOption.Transfer:
+                    DoTransfer(bank); // this one
+                    break;
+
+                case MenuOption.NewAccount:
+                    DoAddAccount();
+                    break;
+
+                case MenuOption.PrintTransactions:
+                    bank.PrintTransactioHistory();
+                    break;
+
+                case MenuOption.Quit:
+                    break;
+
+            }
+        } while (userSelection != MenuOption.Quit);
+
+
+        Console.WriteLine(userSelection);
+
+    }
